@@ -13,9 +13,20 @@
   <body class="body">
     <header class="header">
         <h1 class="main_title">Me * JS * Vue</h1>
+        <h3 class="main_subtitle">Kate Molokova &copy;</h3>
     </header>
     <main class="main">
         <section class="cities">
+            <form class='search_container'>
+                <fieldset class='search_fieldset'>
+                  <input class="search_field"
+                         placeholder="Search..."
+                         type='text'
+                         required
+                  />
+                </fieldset>
+                <button class='search_search-button' type='button'>x</button>
+              </form>
             <template class="template">
                 <div class="cities__element">
                     <button class="city_name"></button>
@@ -32,6 +43,6 @@
                 </div>
             </template>
         </section>
-    </main>   
+    </main>
   </body>
 </html>

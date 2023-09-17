@@ -24,7 +24,7 @@ const citiesList = [
 function render() { 
     const cities = citiesList
         .map(getItem)
-        elementsContainer.prepend(...cities); 
+        elementsContainer.append(...cities); 
 }
 
 function getItem(item) {
