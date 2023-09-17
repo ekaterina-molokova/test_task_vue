@@ -34,23 +34,12 @@ function getItem(item) {
 
     elementTitle.addEventListener("click", function(evt) {
         elementTitle.classList.toggle('clicked');
-        elementTitle.classList.contains('clicked')
-        ? cityInfoContainer.classList.remove('invisible')
-        : cityInfoContainer.classList.add('invisible');
         elementTitle.classList.contains('clicked') && !cityInfoContainer.classList.contains('invisible')
-        ? filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent)
-        .map(getCurrentCity)
+        ? filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent).map(getCurrentCity)
         : "";
         elementTitle.classList.contains('clicked') && !cityInfoContainer.classList.contains('invisible')
         ? cityInfoContainer.prepend(...filteredCity)
-        : cityInfoContainer.querySelector(".card").remove();
-
-
-
-
-        // const filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent)
-        // .map(getCurrentCity)
-        // cityInfoContainer.prepend(...filteredCity);
+        : (cityInfoContainer.querySelector(".card").remove() && elementTitle.classList.toggle('clicked'));
     });
     return newCity;
 }
