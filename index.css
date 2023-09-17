@@ -119,6 +119,9 @@
     border: none;
     width: 100%;
     background-color: transparent;
+    font-weight: 500;
+    font-size: 15px;
+    color: #e96acf;
 }
 
 .search_field::placeholder {
@@ -128,7 +131,11 @@
     opacity: 0.5;
 }
 
-.search_search-button {
+.search_field:focus {
+    outline: #e96acf;
+}
+
+.search_clear-button {
     border: none;
     background-color: transparent;
     width: 45px;
@@ -137,8 +144,12 @@
     color: #e96acf;
 }
 
-.search_search-button:hover {
+.search_clear-button:hover {
     cursor: pointer;
+}
+
+.invisible {
+    display: none;
 }
 
 @media screen and (min-width: 1200px) {

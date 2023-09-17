@@ -3,6 +3,9 @@ const elementsContainer = document.querySelector(".cities");
 const templateCity = document.querySelector(".template_city"); 
 const cityInfoContainer = document.querySelector(".cards_holder");
 const search = document.querySelector('.search_field');
+const searchButton = document.querySelector('.search_search-button');
+const clearButton = document.querySelector('.search_clear-button');
+const form = document.querySelector('.search_container');
 
 const citiesList = [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
@@ -22,10 +25,13 @@ const citiesList = [
 	{ "city_name": "Novosibirsk", "country_name": "Russia", "population": 1612833, "coordinates": { "lat": 55.0084, "lng": 82.9357 } }
 ]
 
+let init = citiesList;
+
 function render() { 
-    const cities = citiesList
+    console.log(init);
+    const cities = init
         .map(getItem)
-        elementsContainer.append(...cities); 
+        elementsContainer.append(...cities);
 }
 
 function getItem(item) {
@@ -58,11 +64,24 @@ function getCurrentCity(item) {
     return currentCity;
 }
 
-render();
-
 search.addEventListener('change', searchFunc);
+clearButton.addEventListener('click', function(evt) {
+    init = citiesList;
+    render();
+    form.reset();
+    clearButton.classList.toggle('invisible');
+})
 
 function searchFunc(evt) {
     evt.preventDefault();
-    return citiesList.filter(item => item.city_name.includes(evt.target.value) || item.country_name.includes(evt.target.value));
+    clearButton.classList.toggle('invisible');
+    init = citiesList
+    .filter(item =>
+        item.city_name.includes(evt.target.value)
+        || item.country_name.includes(evt.target.value)
+    );
+    render();
+    return init;
 }
+
+render();
