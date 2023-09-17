@@ -2,6 +2,7 @@ const templateElement = document.querySelector(".template");
 const elementsContainer = document.querySelector(".cities");
 const templateCity = document.querySelector(".template_city"); 
 const cityInfoContainer = document.querySelector(".cards_holder");
+const search = document.querySelector('.search_field');
 
 const citiesList = [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
@@ -58,3 +59,10 @@ function getCurrentCity(item) {
 }
 
 render();
+
+search.addEventListener('change', searchFunc);
+
+function searchFunc(evt) {
+    evt.preventDefault();
+    return citiesList.filter(item => item.city_name.includes(evt.target.value) || item.country_name.includes(evt.target.value));
+}
