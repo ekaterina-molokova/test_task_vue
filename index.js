@@ -1,7 +1,7 @@
 const templateElement = document.querySelector(".template"); 
 const elementsContainer = document.querySelector(".cities");
 const templateCity = document.querySelector(".template_city"); 
-const cityInfoContainer = document.querySelector(".card");
+const cityInfoContainer = document.querySelector(".cards_holder");
 
 const citiesList = [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
@@ -33,9 +33,24 @@ function getItem(item) {
     elementTitle.textContent = item.city_name;
 
     elementTitle.addEventListener("click", function(evt) {
-        const filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent)
+        elementTitle.classList.toggle('clicked');
+        elementTitle.classList.contains('clicked')
+        ? cityInfoContainer.classList.remove('invisible')
+        : cityInfoContainer.classList.add('invisible');
+        elementTitle.classList.contains('clicked') && !cityInfoContainer.classList.contains('invisible')
+        ? filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent)
         .map(getCurrentCity)
-        cityInfoContainer.prepend(...filteredCity);
+        : "";
+        elementTitle.classList.contains('clicked') && !cityInfoContainer.classList.contains('invisible')
+        ? cityInfoContainer.prepend(...filteredCity)
+        : cityInfoContainer.querySelector(".card").remove();
+
+
+
+
+        // const filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent)
+        // .map(getCurrentCity)
+        // cityInfoContainer.prepend(...filteredCity);
     });
     return newCity;
 }

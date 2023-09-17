@@ -29,7 +29,6 @@
     padding: 0;
     box-sizing: border-box;
     display: flex;
-    border: 3px solid #15dfa3;
 }
 
 .cities {
@@ -37,7 +36,7 @@
     flex-direction: column;
     border-right: 3px solid #15dfa3;
     min-width: 30%;
-    margin: 0;
+    margin: auto;
     padding: 0;
     box-sizing: border-box;
 }
@@ -70,10 +69,26 @@
     color: #e96acf;
 }
 
-.card {
+.clicked {
+    border: 2px solid #e96acf;
+    padding: 10px;
+    color: #e96acf;
+}
+
+.cards_holder {
+    border: 2px solid red;
     width: 100%;
-    margin: 20px 0;
-    padding: 0;
+}
+
+.card {
+    margin: 0;
+    padding: 20px 0;
+    box-sizing: border-box;
+    border-bottom: 2px solid #15dfa3;
+}
+
+.invisible {
+    opacity: 0;
 }
 
 @media screen and (min-width: 1200px) {
