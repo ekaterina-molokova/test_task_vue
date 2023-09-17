@@ -1,5 +1,7 @@
 const templateElement = document.querySelector(".template"); 
 const elementsContainer = document.querySelector(".cities");
+const templateCity = document.querySelector(".template_city"); 
+const cityInfoContainer = document.querySelector(".card");
 
 const citiesList = [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
@@ -29,7 +31,26 @@ function getItem(item) {
     const newCity = templateElement.content.cloneNode(true);
     const elementTitle = newCity.querySelector(".city_name"); 
     elementTitle.textContent = item.city_name;
+
+    elementTitle.addEventListener("click", function(evt) {
+        const filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent)
+        .map(getCurrentCity)
+        cityInfoContainer.prepend(...filteredCity);
+    });
     return newCity;
-} 
+}
+
+function getCurrentCity(item) {
+    const currentCity = templateCity.content.cloneNode(true);
+    const cityName = currentCity.querySelector(".city_name_card");
+    const countryName = currentCity.querySelector(".country_name");
+    const population = currentCity.querySelector(".population");
+    const coordinates = currentCity.querySelector(".coordinates");
+    cityName.textContent = item.city_name;
+    countryName.textContent = `Country: ${item.country_name}`;
+    population.textContent = `Population: ${item.population}`;
+    coordinates.textContent = `Coordinates: lat ${item.coordinates.lat}, lng ${item.coordinates.lng}`;
+    return currentCity;
+}
 
 render();

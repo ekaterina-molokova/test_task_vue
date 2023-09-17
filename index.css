@@ -7,8 +7,9 @@
 
 .header {
     display: flex;
-    margin: 2% auto;
-    padding: 0;
+    width: 30%;
+    margin: 0;
+    padding: 30px 0;
     box-sizing: border-box;
 }
 
@@ -28,13 +29,13 @@
     padding: 0;
     box-sizing: border-box;
     display: flex;
+    border: 3px solid #15dfa3;
 }
 
 .cities {
     display: flex;
     flex-direction: column;
-    border: 3px solid #15dfa3;
-    border-right: none;
+    border-right: 3px solid #15dfa3;
     min-width: 30%;
     margin: 0;
     padding: 0;
@@ -42,43 +43,37 @@
 }
 
 .cities__element {
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 0;
     box-sizing: border-box;
 }
 
-.city_name {
+.city_name, .city_name_card, .country_name, .population, .coordinates  {
     text-align: center;
     margin: 0 auto;
-    padding: 0;
-    font-size: 20px;
+    padding: 0 0 5px;
     font-weight: 500;
-    text-transform: uppercase;
-    color: #15dfa3;
+    color: #e96acf;
     border: none;
     width: 100%;
     background-color: transparent;
 }
 
+.city_name {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #15dfa3;
+}
+
 .city_name:hover {
     cursor: pointer;
     color: #e96acf;
-    opacity: 0.5;
 }
 
 .card {
-    width: 100vw;
-    border: 3px solid #15dfa3;
-}
-
-.subtitle {
-    text-align: center;
-    margin: auto;
+    width: 100%;
+    margin: 20px 0;
     padding: 0;
-    font-size: 30px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #e96acf;
 }
 
 @media screen and (min-width: 1200px) {
