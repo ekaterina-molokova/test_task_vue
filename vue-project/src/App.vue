@@ -15,9 +15,9 @@
   <!-- <main> -->
     <!-- <TheWelcome /> -->
   <!-- </main> -->
-  <div class="main_container">
+  <div>
     <header class="header">
-        <h1 class="main_title">Me * JS * Vue</h1>
+        <h1 class="main_title">Me * Vue</h1>
         <h3 class="main_subtitle">Kate Molokova &copy;</h3>
     </header>
     <main class="main">
@@ -79,13 +79,6 @@
     flex-wrap: wrap;
   } */
 /* } */
-.main_container {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
-    min-height: 100vh;
-}
 
 .header {
     display: flex;
