@@ -58,10 +58,15 @@
   font-weight: normal;
 }
 
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
-  /* background: var(--color-background); */
   background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
   transition:
     color 0.5s,
