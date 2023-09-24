@@ -6,7 +6,9 @@ export default {
       main_title: "Me * Vue",
       main_subtitle: "Kate Molokova",
       isClicked: false,
-      isVisible: false,
+      isVisible: true,
+      methods: {
+      },
       citiesList: [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
 	{ "city_name": "Rotterdam", "country_name": "Netherlands", "population": 650000, "coordinates": { "lat": 51.9225, "lng": 4.47917 } },
@@ -27,16 +29,7 @@ export default {
     }
   },
 
-//     elementTitle.addEventListener("click", function(evt) {
-//         elementTitle.classList.toggle('clicked');
-//         elementTitle.classList.contains('clicked') && !cityInfoContainer.classList.contains('invisible')
-//         ? filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent).map(getCurrentCity)
-//         : "";
-//         elementTitle.classList.contains('clicked') && !cityInfoContainer.classList.contains('invisible')
-//         ? cityInfoContainer.prepend(...filteredCity)
-//         : (cityInfoContainer.querySelector(".card").remove() && elementTitle.classList.toggle('clicked'));
-//     });
-//     
+//       filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent).map(getCurrentCity)
 
 // search.addEventListener('change', searchFunc);
 // clearButton.addEventListener('click', function(evt) {
@@ -58,6 +51,7 @@ export default {
 //     return init;
 // }
 }
+
 </script>
 
 <template>
@@ -78,12 +72,15 @@ export default {
                 </fieldset>
                 <button class='search_clear-button' type='button'>X</button>
               </form>
-              <div class="cities__element">
+              <div class="cities__element"
+                v-for="city in citiesList"
+                :key="city.city_name"
+                @click="isClicked = !isClicked"
+                >
                 <button
-                  v-for="city in citiesList"
-                  :key="city.city_name"
                   v-bind:class="isClicked && 'clicked'"
-                  class="city_name">
+                  class="city_name"
+                  >
                   {{ city.city_name }}
                   </button>
               </div>
@@ -92,7 +89,7 @@ export default {
             <div
               v-for="city in citiesList"
               :key="city.city_name"
-              v-show="isVisible"
+              v-show="isClicked ? isVisible : !isVisible"
               class="card">
                 <h2 class="city_name_card">{{ city.city_name }}</h2>
                 <h3 class="country_name">{{ city.country_name }}</h3>
@@ -107,7 +104,6 @@ export default {
 <style scoped>
 
 .header {
-  border: 10px solid pink;
   display: flex;
   width: 100%;
   margin: 0;
@@ -131,7 +127,6 @@ export default {
 }
 
 .main {
-  border: 10px solid blue;
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
@@ -139,7 +134,6 @@ export default {
 }
 
 .cities {
-  border: 10px solid green;
   display: flex;
   flex-direction: column;
   min-width: 30%;
@@ -183,7 +177,6 @@ export default {
 }
 
 .cards_holder {
-  border: 10px solid yellow;
   width: 100%;
 }
 
