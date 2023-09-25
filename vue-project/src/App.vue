@@ -7,7 +7,14 @@ export default {
       main_subtitle: "Kate Molokova",
       isClicked: false,
       isVisible: true,
+      currentCityName: '',
       methods: {
+        handleClick(event, arr, current, clicked) {
+          current = arr.filter(item => item.city_name === event.target.innerHTML)[0].city_name;
+          clicked = !clicked;
+          console.log(current, clicked);
+          return current, clicked;
+        }
       },
       citiesList: [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
@@ -29,8 +36,6 @@ export default {
     }
   },
 
-//       filteredCity = citiesList.filter(item => item.city_name === evt.target.textContent).map(getCurrentCity)
-
 // search.addEventListener('change', searchFunc);
 // clearButton.addEventListener('click', function(evt) {
 //     init = citiesList;
@@ -51,7 +56,6 @@ export default {
 //     return init;
 // }
 }
-
 </script>
 
 <template>
@@ -75,7 +79,7 @@ export default {
               <div class="cities__element"
                 v-for="city in citiesList"
                 :key="city.city_name"
-                @click="isClicked = !isClicked"
+                @click="methods.handleClick($event, this.citiesList, this.currentCityName, this.isClicked)"
                 >
                 <button
                   v-bind:class="isClicked && 'clicked'"
@@ -83,7 +87,7 @@ export default {
                   >
                   {{ city.city_name }}
                   </button>
-              </div>
+                </div>
         </section>
         <section class="cards_holder">
             <div
