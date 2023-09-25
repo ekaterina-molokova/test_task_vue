@@ -8,19 +8,23 @@ export default {
       isClicked: false,
       isVisible: true,
       currentCityName: '',
+      currentCity: { "city_name": "", "": "", "population": 0, "coordinates": { "lat": 0.0, "lng": 0.0 } },
       formValues: {
         search: '',
       },
       methods: {
-        handleClick(event, arr, current, clicked) {
-          current = arr.filter(item => item.city_name === event.target.innerHTML)[0].city_name;
-          clicked = !clicked;
-          console.log(current, clicked);
-          return current, clicked;
+        handleClick(event, arr) {
+          let current = arr.filter(item => item.city_name === event.target.innerHTML);
+          console.log(current);
+          return current;
         },
         handleSearch(event, arr) {
           event.preventDefault();
-          console.log(arr.filter(item => item.city_name.includes(event.target.value) || item.country_name.includes(event.target.value)));
+          console.log(
+            arr
+            .filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase())
+              || item.country_name.toLowerCase().includes(event.target.value.toLowerCase())
+            ));
         },
       },
       citiesList: [
@@ -53,11 +57,6 @@ export default {
     </header>
     <main class="main">
         <section class="cities">
-          <div>
-            <pre>
-              {{ JSON.stringify(this.formValues, null, 2) }}
-            </pre>
-          </div>
             <form class='search_container'>
                 <fieldset class='search_fieldset'>
                   <input class="search_field"
@@ -67,12 +66,12 @@ export default {
                          @change="methods.handleSearch($event, this.citiesList)"
                   />
                 </fieldset>
-                <button class='search_clear-button' type='button'>X</button>
+                <button class='search_clear-button' type='button' @click="this.formValues.search = ''">X</button>
               </form>
               <div class="cities__element"
                 v-for="city in citiesList"
                 :key="city.city_name"
-                @click="methods.handleClick($event, this.citiesList, this.currentCityName, this.isClicked)"
+                @click="methods.handleClick($event, this.citiesList)"
                 >
                 <button
                   v-bind:class="isClicked && 'clicked'"
@@ -83,7 +82,7 @@ export default {
                 </div>
         </section>
         <section class="cards_holder">
-            <div
+            <!-- <div
               v-for="city in citiesList"
               :key="city.city_name"
               v-show="isClicked ? isVisible : !isVisible"
@@ -92,6 +91,12 @@ export default {
                 <h3 class="country_name">{{ city.country_name }}</h3>
                 <h4 class="population"> {{ city.population }}</h4>
                 <h5 class="coordinates">{{ city.coordinates }}</h5>
+            </div> -->
+            <div class="card">
+                <h2 class="city_name_card">{{ currentCity.city_name }}</h2>
+                <h3 class="country_name">{{ currentCity.country_name }}</h3>
+                <h4 class="population"> {{ currentCity.population }}</h4>
+                <h5 class="coordinates">{{ currentCity.coordinates }}</h5>
             </div>
         </section>
     </main>
