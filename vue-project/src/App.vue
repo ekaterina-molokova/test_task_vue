@@ -8,13 +8,20 @@ export default {
       isClicked: false,
       isVisible: true,
       currentCityName: '',
+      formValues: {
+        search: '',
+      },
       methods: {
         handleClick(event, arr, current, clicked) {
           current = arr.filter(item => item.city_name === event.target.innerHTML)[0].city_name;
           clicked = !clicked;
           console.log(current, clicked);
           return current, clicked;
-        }
+        },
+        handleSearch(event, arr) {
+          event.preventDefault();
+          console.log(arr.filter(item => item.city_name.includes(event.target.value) || item.country_name.includes(event.target.value)));
+        },
       },
       citiesList: [
 	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041 } },
@@ -35,26 +42,6 @@ export default {
 ],
     }
   },
-
-// search.addEventListener('change', searchFunc);
-// clearButton.addEventListener('click', function(evt) {
-//     init = citiesList;
-//     render();
-//     form.reset();
-//     clearButton.classList.toggle('invisible');
-// })
-
-// function searchFunc(evt) {
-//     evt.preventDefault();
-//     clearButton.classList.toggle('invisible');
-//     init = citiesList
-//     .filter(item =>
-//         item.city_name.includes(evt.target.value)
-//         || item.country_name.includes(evt.target.value)
-//     );
-//     render();
-//     return init;
-// }
 }
 </script>
 
@@ -66,12 +53,18 @@ export default {
     </header>
     <main class="main">
         <section class="cities">
+          <div>
+            <pre>
+              {{ JSON.stringify(this.formValues, null, 2) }}
+            </pre>
+          </div>
             <form class='search_container'>
                 <fieldset class='search_fieldset'>
                   <input class="search_field"
                          placeholder = "Search..."
                          type='text'
-                         required
+                         v-model="formValues.search"
+                         @change="methods.handleSearch($event, this.citiesList)"
                   />
                 </fieldset>
                 <button class='search_clear-button' type='button'>X</button>
