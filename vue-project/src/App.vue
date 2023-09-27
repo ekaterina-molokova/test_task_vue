@@ -1,16 +1,16 @@
 <script>
-import { onUpdated } from 'vue';
+import { onUpdated, render } from 'vue';
 export default {
   setup() {
     onUpdated(() => {
-      console.log('Component is updated');
     });
   },
   name: "App",
   methods: {
     handleClick(event) {
       this.isClicked = !this.isClicked;
-      return this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML);
+      this.isClicked ? this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML) : this.currentCity = {};
+      // return this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML);
     },
     handleSearch(event) {
       event.preventDefault();
@@ -23,6 +23,7 @@ export default {
       main_subtitle: "Kate Molokova",
       isClicked: false,
       isVisible: false,
+      render: false,
       search: [],
       currentCity: {},
       formValues: {
@@ -82,9 +83,9 @@ export default {
                   </button>
                 </div>
         </section>
-        <section class="cards_holder">
-            <!-- <div
-              v-for="city in citiesList"
+        <section class="cards_holder" v-if="currentCity">
+            <div
+              v-for="city in currentCity"
               :key="city.city_name"
               class="card"
               >
@@ -92,12 +93,6 @@ export default {
                 <h3 class="country_name">{{ city.country_name }}</h3>
                 <h4 class="population"> {{ city.population }}</h4>
                 <h5 class="coordinates">{{ city.coordinates }}</h5>
-            </div> -->
-            <div class="card">
-                <h2 class="city_name_card">{{ currentCity.city_name }}</h2>
-                <h3 class="country_name">{{ currentCity.country_name }}</h3>
-                <h4 class="population"> {{ currentCity.population }}</h4>
-                <h5 class="coordinates">{{ currentCity.coordinates }}</h5>
             </div>
         </section>
     </main>
