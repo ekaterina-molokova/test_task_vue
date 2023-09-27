@@ -2,26 +2,22 @@
 export default {
   name: "App",
   methods: {
-        handleClick(event) {
-          this.isClicked = !this.isClicked;
-          return this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML);
-        },
-        handleSearch(event, arr) {
-          event.preventDefault();
-          console.log(
-            arr
-            .filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase())
-              || item.country_name.toLowerCase().includes(event.target.value.toLowerCase())
-            ));
-        },
-      },
+    handleClick(event) {
+      this.isClicked = !this.isClicked;
+      return this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML);
+    },
+    handleSearch(event) {
+      event.preventDefault();
+      return this.search = this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase()) || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()));
+    },
+  },
   data() {
     return {
       main_title: "Me * Vue",
       main_subtitle: "Kate Molokova",
       isClicked: false,
       isVisible: true,
-      currentCityName: '',
+      search: [],
       currentCity: {},
       formValues: {
         search: '',
@@ -62,7 +58,7 @@ export default {
                          placeholder = "Search..."
                          type='text'
                          v-model="formValues.search"
-                         @change="methods.handleSearch($event)"
+                         @change="handleSearch"
                   />
                 </fieldset>
                 <button class='search_clear-button' type='button' @click="this.formValues.search = ''">X</button>
