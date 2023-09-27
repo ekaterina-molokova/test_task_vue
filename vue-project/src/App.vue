@@ -16,7 +16,7 @@ export default {
       main_title: "Me * Vue",
       main_subtitle: "Kate Molokova",
       isClicked: false,
-      isVisible: true,
+      isVisible: false,
       search: [],
       currentCity: {},
       formValues: {
@@ -58,10 +58,10 @@ export default {
                          placeholder = "Search..."
                          type='text'
                          v-model="formValues.search"
-                         @change="handleSearch"
+                         @change="handleSearch($event), this.isVisible = true"
                   />
                 </fieldset>
-                <button class='search_clear-button' type='button' @click="this.formValues.search = ''">X</button>
+                <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="this.formValues.search = '', this.isVisible = false">X</button>
               </form>
               <div class="cities__element"
                 v-for="city in citiesList"
