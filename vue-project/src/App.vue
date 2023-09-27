@@ -1,5 +1,5 @@
 <script>
-import { onUpdated, render } from 'vue';
+import { onUpdated } from 'vue';
 export default {
   setup() {
     onUpdated(() => {
@@ -8,24 +8,23 @@ export default {
   name: "App",
   methods: {
     handleClick(event) {
+      // console.log(event.target.innerHTML, Object.keys(this.currentCity), this.isClicked);
       this.isClicked = !this.isClicked;
       this.isClicked ? this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML) : this.currentCity = {};
-      // return this.currentCity = this.citiesList.filter(item => item.city_name === event.target.innerHTML);
     },
     handleSearch(event) {
       event.preventDefault();
       this.isSearched = true;
       this.isSearched ? this.search = this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase()) || item.country_name.toLowerCase().includes(event.target.value.toLowerCase())) : this.search = [];
-      // return this.search = this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase()) || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()));
     },
   },
   data() {
     return {
       main_title: "Me * Vue",
       main_subtitle: "Kate Molokova",
+      isSearched: false,
       isClicked: false,
       isVisible: false,
-      isSearched: false,
       search: [],
       currentCity: {},
       formValues: {
@@ -71,19 +70,18 @@ export default {
                   />
                 </fieldset>
                 <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="this.formValues.search = '', this.isVisible = false, this.isSearched = false, this.search = []">X</button>
-              </form>
-              <div class="cities__element"
-                v-for="city in citiesList"
-                :key="city.city_name"
-                @click="handleClick"
-                >
-                <button
-                  v-bind:class="isClicked && 'clicked'"
-                  class="city_name"
-                  >
-                  {{ city.city_name }}
-                  </button>
-                </div>
+            </form>
+            <div class="cities__element"
+              v-for="city in citiesList"
+              :key="city.city_name"
+              @click="handleClick"
+            >
+            <button
+              class="city_name"
+            >
+              {{ city.city_name }}
+            </button>
+            </div>
         </section>
         <section class="cards_holder" v-if="currentCity">
             <div
@@ -180,6 +178,10 @@ export default {
 .city_name:hover {
   cursor: pointer;
   color: #e96acf;
+}
+
+.city_name:active {
+  border: 2px solid #e96acf;
 }
 
 .clicked {
