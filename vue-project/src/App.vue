@@ -14,7 +14,9 @@ export default {
     },
     handleSearch(event) {
       event.preventDefault();
-      return this.search = this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase()) || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()));
+      this.isSearched = true;
+      this.isSearched ? this.search = this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase()) || item.country_name.toLowerCase().includes(event.target.value.toLowerCase())) : this.search = [];
+      // return this.search = this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase()) || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()));
     },
   },
   data() {
@@ -23,7 +25,7 @@ export default {
       main_subtitle: "Kate Molokova",
       isClicked: false,
       isVisible: false,
-      render: false,
+      isSearched: false,
       search: [],
       currentCity: {},
       formValues: {
@@ -68,7 +70,7 @@ export default {
                          @change="handleSearch($event), this.isVisible = true"
                   />
                 </fieldset>
-                <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="this.formValues.search = '', this.isVisible = false">X</button>
+                <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="this.formValues.search = '', this.isVisible = false, this.isSearched = false, this.search = []">X</button>
               </form>
               <div class="cities__element"
                 v-for="city in citiesList"
@@ -86,6 +88,18 @@ export default {
         <section class="cards_holder" v-if="currentCity">
             <div
               v-for="city in currentCity"
+              :key="city.city_name"
+              class="card"
+              >
+                <h2 class="city_name_card">{{ city.city_name }}</h2>
+                <h3 class="country_name">{{ city.country_name }}</h3>
+                <h4 class="population"> {{ city.population }}</h4>
+                <h5 class="coordinates">{{ city.coordinates }}</h5>
+            </div>
+        </section>
+        <section class="cards_holder" v-if="search">
+            <div
+              v-for="city in search"
               :key="city.city_name"
               class="card"
               >
