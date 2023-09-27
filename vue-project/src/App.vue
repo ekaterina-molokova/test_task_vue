@@ -1,5 +1,11 @@
 <script>
+import { onUpdated } from 'vue';
 export default {
+  setup() {
+    onUpdated(() => {
+      console.log('Component is updated');
+    });
+  },
   name: "App",
   methods: {
     handleClick(event) {
