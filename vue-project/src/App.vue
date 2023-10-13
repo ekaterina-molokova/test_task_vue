@@ -1,91 +1,83 @@
 <script>
 import { onUpdated, computed } from 'vue';
+import Card from './Card.vue';
 
 export default {
-  setup() {
-    onUpdated(() => {
-    });
-  },
-  name: "App",
-  methods: {
-    handleClick(event) {
-      this.isClicked = !this.isClicked;
-      // this.isClicked
-      // ? this.currentCity = computed(() => {
-      //   return this.citiesList.filter(item => {
-      //     if (item.city_name === event.target.innerHTML) {
-      //       item.clicked = true;
-      //       return item;
-      //     }
-      //   })})
-      // : this.currentCity = computed(() => {
-      //   return {}
-      // });
-      this.currentCity = computed(() => {
-        return this.citiesList.filter(item => {
-          if (item.city_name === event.target.innerHTML && item.clicked === false) {
-            item.clicked = true;
-            return item;
-          } else {
-            item.clicked = false;
-          }
-        })});
-
+    setup() {
+        onUpdated(() => {
+        });
     },
-    handleSearch(event) {
-      event.preventDefault();
-      this.isSearched = true;
-      this.isSearched
-      ? this.search = computed(() => {
-        return this.citiesList.filter(
-        item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase())
-        || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()))})
-      : this.search = computed(() => {
-        return [];
-      });
+    name: "App",
+    methods: {
+        handleClick(event) {
+            this.isClicked = !this.isClicked;
+            this.currentCity = computed(() => {
+                return this.citiesList.filter(item => {
+                    if (item.city_name === event.target.innerHTML && item.clicked === false) {
+                        item.clicked = true;
+                        return item;
+                    }
+                    else {
+                        item.clicked = false;
+                    }
+                });
+            });
+        },
+        handleSearch(event) {
+            event.preventDefault();
+            this.isSearched = true;
+            this.isSearched
+                ? this.search = computed(() => {
+                    return this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase())
+                        || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()));
+                })
+                : this.search = computed(() => {
+                    return [];
+                });
+        },
+        handleClear() {
+            this.isVisible = false;
+            this.isSearched = false;
+            this.formValues.search = computed(() => {
+                return '';
+            });
+            this.search = computed(() => {
+                return [];
+            });
+        }
     },
-    handleClear() {
-      this.isVisible = false;
-      this.isSearched = false;
-      this.formValues.search = computed(() => {
-        return '';
-      });
-      this.search = computed(() => {
-        return [];
-      });
-    }
-  },
-  data() {
-    return {
-      main_title: "Me * Vue",
-      main_subtitle: "Kate Molokova",
-      isSearched: false,
-      isClicked: false,
-      isVisible: false,
-      search: [],
-      currentCity: {},
-      formValues: {
-        search: '',
-      },
-      citiesList: [
-	{ "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041, "clicked": false } },
-	{ "city_name": "Rotterdam", "country_name": "Netherlands", "population": 650000, "coordinates": { "lat": 51.9225, "lng": 4.47917, "clicked": false } },
-	{ "city_name": "The Hague", "country_name": "Netherlands", "population": 540000, "coordinates": { "lat": 52.0787, "lng": 4.2888, "clicked": false } },
-	{ "city_name": "Paris", "country_name": "France", "population": 2140526, "coordinates": { "lat": 48.8566, "lng": 2.3522, "clicked": false } },
-	{ "city_name": "Marseille", "country_name": "France", "population": 861635, "coordinates": { "lat": 43.2965, "lng": 5.3698, "clicked": false } },
-	{ "city_name": "Lyon", "country_name": "France", "population": 515695, "coordinates": { "lat": 45.7597, "lng": 4.8422, "clicked": false } },
-	{ "city_name": "Berlin", "country_name": "Germany", "population": 3769495, "coordinates": { "lat": 52.52, "lng": 13.405, "clicked": false } },
-	{ "city_name": "Hamburg", "country_name": "Germany", "population": 1822445, "coordinates": { "lat": 53.5511, "lng": 9.993, "clicked": false } },
-	{ "city_name": "Munich", "country_name": "Germany", "population": 1471508, "coordinates": { "lat": 48.1351, "lng": 11.582, "clicked": false } },
-	{ "city_name": "New York", "country_name": "USA", "population": 8175133, "coordinates": { "lat": 40.7128, "lng": -74.006, "clicked": false } },
-	{ "city_name": "Los Angeles", "country_name": "USA", "population": 3792621, "coordinates": { "lat": 34.0522, "lng": -118.2437, "clicked": false } },
-	{ "city_name": "Chicago", "country_name": "USA", "population": 2695598, "coordinates": { "lat": 41.8781, "lng": -87.6298, "clicked": false } },
-	{ "city_name": "Moscow", "country_name": "Russia", "population": 12506468, "coordinates": { "lat": 55.7558, "lng": 37.6176, "clicked": false } },
-	{ "city_name": "Saint Petersburg", "country_name": "Russia", "population": 5351935, "coordinates": { "lat": 59.9343, "lng": 30.3351, "clicked": false } },
-	{ "city_name": "Novosibirsk", "country_name": "Russia", "population": 1612833, "coordinates": { "lat": 55.0084, "lng": 82.9357, "clicked": false } }
-],
-    }
-  },
+    data() {
+        return {
+            main_title: "Me * Vue",
+            main_subtitle: "Kate Molokova",
+            isSearched: false,
+            isClicked: false,
+            isVisible: false,
+            search: [],
+            currentCity: {},
+            formValues: {
+                search: '',
+            },
+            citiesList: [
+                { "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041, "clicked": false } },
+                { "city_name": "Rotterdam", "country_name": "Netherlands", "population": 650000, "coordinates": { "lat": 51.9225, "lng": 4.47917, "clicked": false } },
+                { "city_name": "The Hague", "country_name": "Netherlands", "population": 540000, "coordinates": { "lat": 52.0787, "lng": 4.2888, "clicked": false } },
+                { "city_name": "Paris", "country_name": "France", "population": 2140526, "coordinates": { "lat": 48.8566, "lng": 2.3522, "clicked": false } },
+                { "city_name": "Marseille", "country_name": "France", "population": 861635, "coordinates": { "lat": 43.2965, "lng": 5.3698, "clicked": false } },
+                { "city_name": "Lyon", "country_name": "France", "population": 515695, "coordinates": { "lat": 45.7597, "lng": 4.8422, "clicked": false } },
+                { "city_name": "Berlin", "country_name": "Germany", "population": 3769495, "coordinates": { "lat": 52.52, "lng": 13.405, "clicked": false } },
+                { "city_name": "Hamburg", "country_name": "Germany", "population": 1822445, "coordinates": { "lat": 53.5511, "lng": 9.993, "clicked": false } },
+                { "city_name": "Munich", "country_name": "Germany", "population": 1471508, "coordinates": { "lat": 48.1351, "lng": 11.582, "clicked": false } },
+                { "city_name": "New York", "country_name": "USA", "population": 8175133, "coordinates": { "lat": 40.7128, "lng": -74.006, "clicked": false } },
+                { "city_name": "Los Angeles", "country_name": "USA", "population": 3792621, "coordinates": { "lat": 34.0522, "lng": -118.2437, "clicked": false } },
+                { "city_name": "Chicago", "country_name": "USA", "population": 2695598, "coordinates": { "lat": 41.8781, "lng": -87.6298, "clicked": false } },
+                { "city_name": "Moscow", "country_name": "Russia", "population": 12506468, "coordinates": { "lat": 55.7558, "lng": 37.6176, "clicked": false } },
+                { "city_name": "Saint Petersburg", "country_name": "Russia", "population": 5351935, "coordinates": { "lat": 59.9343, "lng": 30.3351, "clicked": false } },
+                { "city_name": "Novosibirsk", "country_name": "Russia", "population": 1612833, "coordinates": { "lat": 55.0084, "lng": 82.9357, "clicked": false } }
+            ],
+        };
+    },
+    components: { Card }
 }
 </script>
 
@@ -106,7 +98,6 @@ export default {
                          @change="handleSearch($event), this.isVisible = true"
                   />
                 </fieldset>
-                <!-- <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="this.formValues.search = '', this.isVisible = false, this.isSearched = false, this.search = []">X</button> -->
                 <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="handleClear">X</button>
             </form>
             <div class="cities__element"
@@ -123,28 +114,25 @@ export default {
             </div>
         </section>
         <section class="cards_holder" v-if="currentCity">
-            <div
-              v-for="city in currentCity"
-              :key="city.city_name"
-              class="card"
-              >
-                <h2 class="city_name_card">{{ city.city_name }}</h2>
-                <h3 class="country_name">{{ city.country_name }}</h3>
-                <h4 class="population"> {{ city.population }}</h4>
-                <h5 class="coordinates">{{ city.coordinates }}</h5>
-            </div>
+          <Card
+            v-for="city in currentCity"
+            :key="city.city_name"
+            :city_name="city.city_name"
+            :country_name="city.country_name"
+            :population="city.population"
+            :coordinates="city.coordinates"
+            :class="card"
+            />
         </section>
         <section class="cards_holder" v-if="search">
-            <div
-              v-for="city in search"
-              :key="city.city_name"
-              class="card"
-              >
-                <h2 class="city_name_card">{{ city.city_name }}</h2>
-                <h3 class="country_name">{{ city.country_name }}</h3>
-                <h4 class="population"> {{ city.population }}</h4>
-                <h5 class="coordinates">{{ city.coordinates }}</h5>
-            </div>
+          <Card
+            v-for="city in search"
+            :key="city.city_name"
+            :city_name="city.city_name"
+            :country_name="city.country_name"
+            :population="city.population"
+            :coordinates="city.coordinates"
+          />
         </section>
     </main>
   </div>
@@ -197,7 +185,7 @@ export default {
   box-sizing: border-box;
 }
 
-.city_name, .city_name_card, .country_name, .population, .coordinates  {
+.city_name  {
   text-align: center;
   margin: 0 auto;
   padding: 5px 0;
@@ -232,12 +220,6 @@ export default {
 
 .cards_holder {
   width: 100%;
-}
-
-.card {
-  margin: 0;
-  padding: 20px 0;
-  box-sizing: border-box;
 }
 
 .search_container {
