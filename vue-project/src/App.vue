@@ -7,18 +7,9 @@ export default {
     name: "App",
     methods: {
         handleClick(event) {
-            this.isClicked = !this.isClicked;
-            this.currentCity = computed(() => {
-                return this.citiesList.filter(item => {
-                    if (item.city_name === event.target.innerHTML && item.clicked === false) {
-                        item.clicked = true;
-                        return item;
-                    }
-                    else {
-                        item.clicked = false;
-                    }
-                });
-            });
+          this.search = computed(() => {
+            return this.citiesList.filter(item => item.city_name === event.target.innerHTML);
+          });
         },
         handleClear(event) {
           this.searchValue = '';
@@ -33,9 +24,7 @@ export default {
             isSearched: false,
             isClicked: false,
             isVisible: false,
-            search: [],
             searchValue: '',
-            currentCity: {},
             citiesList: [
                 { "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041, "clicked": false } },
                 { "city_name": "Rotterdam", "country_name": "Netherlands", "population": 650000, "coordinates": { "lat": 51.9225, "lng": 4.47917, "clicked": false } },
@@ -53,6 +42,8 @@ export default {
                 { "city_name": "Saint Petersburg", "country_name": "Russia", "population": 5351935, "coordinates": { "lat": 59.9343, "lng": 30.3351, "clicked": false } },
                 { "city_name": "Novosibirsk", "country_name": "Russia", "population": 1612833, "coordinates": { "lat": 55.0084, "lng": 82.9357, "clicked": false } }
             ],
+            search: [],
+            currentCity: []
         };
     },
     components: { Card, Search }
@@ -91,6 +82,17 @@ export default {
             </button>
             </div>
         </section>
+        <section class="cards_holder" v-if="search">
+          <Card
+            v-for="city in search"
+            :key="city.city_name"
+            :city_name="city.city_name"
+            :country_name="city.country_name"
+            :population="city.population"
+            :coordinates="city.coordinates"
+            :class="card"
+            />
+        </section>
         <section class="cards_holder" v-if="currentCity">
           <Card
             v-for="city in currentCity"
@@ -101,16 +103,6 @@ export default {
             :coordinates="city.coordinates"
             :class="card"
             />
-        </section>
-        <section class="cards_holder" v-if="search">
-          <Card
-            v-for="city in search"
-            :key="city.city_name"
-            :city_name="city.city_name"
-            :country_name="city.country_name"
-            :population="city.population"
-            :coordinates="city.coordinates"
-          />
         </section>
     </main>
   </div>
