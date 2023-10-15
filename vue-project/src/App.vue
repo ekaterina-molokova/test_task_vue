@@ -1,12 +1,9 @@
 <script>
-import { onUpdated, computed } from 'vue';
+import { computed } from 'vue';
 import Card from './Card.vue';
+import Search from './Search.vue';
 
 export default {
-    setup() {
-        onUpdated(() => {
-        });
-    },
     name: "App",
     methods: {
         handleClick(event) {
@@ -22,18 +19,6 @@ export default {
                     }
                 });
             });
-        },
-        handleSearch(event) {
-            event.preventDefault();
-            this.isSearched = true;
-            this.isSearched
-                ? this.search = computed(() => {
-                    return this.citiesList.filter(item => item.city_name.toLowerCase().includes(event.target.value.toLowerCase())
-                        || item.country_name.toLowerCase().includes(event.target.value.toLowerCase()));
-                })
-                : this.search = computed(() => {
-                    return [];
-                });
         },
         handleClear() {
             this.isVisible = false;
@@ -54,10 +39,8 @@ export default {
             isClicked: false,
             isVisible: false,
             search: [],
+            searchValue: '',
             currentCity: {},
-            formValues: {
-                search: '',
-            },
             citiesList: [
                 { "city_name": "Amsterdam", "country_name": "Netherlands", "population": 872757, "coordinates": { "lat": 52.3676, "lng": 4.9041, "clicked": false } },
                 { "city_name": "Rotterdam", "country_name": "Netherlands", "population": 650000, "coordinates": { "lat": 51.9225, "lng": 4.47917, "clicked": false } },
@@ -77,7 +60,7 @@ export default {
             ],
         };
     },
-    components: { Card }
+    components: { Card, Search }
 }
 </script>
 
@@ -91,11 +74,16 @@ export default {
         <section class="cities">
             <form class='search_container'>
                 <fieldset class='search_fieldset'>
-                  <input class="search_field"
+                  <!-- <input class="search_field"
                          placeholder = "Search..."
                          type='text'
                          v-model="formValues.search"
                          @change="handleSearch($event), this.isVisible = true"
+                  /> -->
+                  <Search
+                    class="search_field"
+                    v-model:modelValue="searchValue"
+                    v-model:searchArr="search"
                   />
                 </fieldset>
                 <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="handleClear">X</button>
