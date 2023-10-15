@@ -20,15 +20,10 @@ export default {
                 });
             });
         },
-        handleClear() {
-            this.isVisible = false;
-            this.isSearched = false;
-            this.formValues.search = computed(() => {
-                return '';
-            });
-            this.search = computed(() => {
-                return [];
-            });
+        handleClear(event) {
+          this.searchValue = '';
+          this.search = [];
+          this.isVisible = false;
         }
     },
     data() {
@@ -74,16 +69,11 @@ export default {
         <section class="cities">
             <form class='search_container'>
                 <fieldset class='search_fieldset'>
-                  <!-- <input class="search_field"
-                         placeholder = "Search..."
-                         type='text'
-                         v-model="formValues.search"
-                         @change="handleSearch($event), this.isVisible = true"
-                  /> -->
                   <Search
                     class="search_field"
                     v-model:modelValue="searchValue"
                     v-model:searchArr="search"
+                    v-model:isVisible="isVisible"
                   />
                 </fieldset>
                 <button class='search_clear-button' v-bind:class="isVisible ? '' : 'invisible'" type='button' @click="handleClear">X</button>
