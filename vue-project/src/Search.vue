@@ -4,7 +4,8 @@ const { citiesList } = App.data();
     
 const props = defineProps({
     modelValue: String,
-    searchArr: Array
+    searchArr: Array,
+    isVisible: Boolean
 });
 
 const emit = defineEmits([
@@ -24,6 +25,10 @@ function emitSearch(e) {
     e.target.value.length > 0
     ? emit('update:searchArr', res)
     : emit('update:searchArr', [])
+}
+
+function emitVisibility(e) {
+    emit('update:isVisible', true)
 }
 
 </script>

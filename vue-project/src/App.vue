@@ -9,9 +9,15 @@ export default {
         handleClick(event) {
           this.currentCity = computed(() => {
             return this.citiesList.filter(item =>
-            item.city_name === event.target.innerHTML
-            ? item && (item.clicked = !item.clicked)
-            : '' && (item.clicked = false)
+            {
+              if (item.city_name === event.target.innerHTML) {
+                item.clicked = !item.clicked;
+                return item.clicked ? item : '';
+              } else {
+                item.clicked = false;
+                return '';
+              }
+            }
           );
         });
         },
